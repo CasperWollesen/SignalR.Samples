@@ -56,6 +56,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="SignalrClientSharedConnectionProxyWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="SignalrClientSeparatedConnectionProxyWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,6 +67,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SignalrClientSharedConnectionProxyWindow.xaml.cs">
+      <DependentUpon>SignalrClientSharedConnectionProxyWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="SignalrClientSeparatedConnectionProxyWindow.xaml.cs">
       <DependentUpon>SignalrClientSeparatedConnectionProxyWindow.xaml</DependentUpon>

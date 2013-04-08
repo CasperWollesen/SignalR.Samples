@@ -11,17 +11,17 @@ namespace BasicChat.Wpf
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class SignalrClientSeparatedConnectionProxyWindow : Window
+    public partial class SignalrClientSharedConnectionProxyWindow : Window
     {
         public System.Threading.Thread Thread { get; set; }
         public string Host = "http://localhost:8081/";   // "http://localhost:8081/" | "http://localhost:44914/"
 
-        public IHubProxy ProxyInvoke { get; set; }
-        public HubConnection ConnectionInvoke { get; set; }
+        public IHubProxy Proxy { get; set; }
+        public HubConnection Connection { get; set; }
 
         public bool Active { get; set; }
 
-        public SignalrClientSeparatedConnectionProxyWindow()
+        public SignalrClientSharedConnectionProxyWindow()
         {
             InitializeComponent();
         }
@@ -33,7 +33,7 @@ namespace BasicChat.Wpf
 
         private async Task SendMessage()
         {
-            await ProxyInvoke.Invoke("send", ClientNameTextBox.Text + ": " + MessageTextBox.Text);
+            await Proxy.Invoke("send", ClientNameTextBox.Text + ": " + MessageTextBox.Text);
         }
 
         private async void ActionWindowLoaded(object sender, RoutedEventArgs e)
@@ -41,12 +41,12 @@ namespace BasicChat.Wpf
             Active = true;
             Thread = new System.Threading.Thread(() =>
             {
-                var connectionOn = new HubConnection(Host);
-                IHubProxy proxyOn = connectionOn.CreateHubProxy("Chat");
+                Connection = new HubConnection(Host);
+                Proxy = Connection.CreateHubProxy("Chat");
 
-                proxyOn.On<string>("send", OnSendData);
+                Proxy.On<string>("send", OnSendData);
 
-                connectionOn.Start();
+                Connection.Start();
 
                 while (Active)
                 {
@@ -54,10 +54,6 @@ namespace BasicChat.Wpf
                 }
             }) { IsBackground = true };
             Thread.Start();
-
-            ConnectionInvoke = new HubConnection(Host);
-            ProxyInvoke = ConnectionInvoke.CreateHubProxy("Chat");
-            await ConnectionInvoke.Start();
         }
 
         private void OnSendData(string message)
