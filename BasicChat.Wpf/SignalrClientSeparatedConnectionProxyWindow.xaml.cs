@@ -11,7 +11,7 @@ namespace BasicChat.Wpf
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SignalrClientSeparatedConnectionProxyWindow : Window
     {
         public System.Threading.Thread Thread { get; set; }
         public string Host = "http://localhost:8081/";   // "http://localhost:8081/" | "http://localhost:44914/"
@@ -21,7 +21,7 @@ namespace BasicChat.Wpf
 
         public bool Active { get; set; }
 
-        public MainWindow()
+        public SignalrClientSeparatedConnectionProxyWindow()
         {
             InitializeComponent();
         }
